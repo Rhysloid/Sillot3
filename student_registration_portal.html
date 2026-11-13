@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students Registration Form</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            univ: {
+              primary: '#1e3a8a',   /* Classic Deep Navy */
+              hover: '#1e40af',
+              bg: '#f8fafc',
+              border: '#cbd5e1',
+              dark: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+    fieldset {
+      border: 1px solid #cbd5e1;
+      border-radius: 0.375rem;
+      padding: 1.25rem;
+      background-color: #ffffff;
+    }
+    legend {
+      font-weight: 600;
+      color: #1e3a8a;
+      padding: 0 0.5rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.025em;
+      text-transform: uppercase;
+    }
+    .form-input-focus:focus {
+      outline: none;
+      border-color: #1e3a8a;
+      box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15);
+    }
+    .error-input {
+      border-color: #dc2626 !important;
+      background-color: #fef2f2 !important;
+    }
+    .valid-input {
+      border-color: #16a34a;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-modal-content, #print-modal-content * {
+        visibility: visible;
+      }
+      #print-modal-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+        border: none;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+
+  <!-- Main Container -->
+  <div class="max-w-4xl mx-auto bg-white border border-slate-300 rounded-lg shadow-sm overflow-hidden">
+    
+    <!-- Portal Header -->
+    <header class="bg-univ-primary text-white p-6 border-b border-blue-900 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <!-- University Seal Icon -->
+        <div class="w-14 h-14 rounded-full bg-white text-univ-primary flex items-center justify-center font-bold text-2xl border-2 border-blue-200 shrink-0">
+          SU
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight">Students Registration Form</h1>
+          <p class="text-blue-200 text-sm">Office of the University Registrar &bull; Official Registration Form</p>
+        </div>
+      </div>
+      <div class="text-right text-xs bg-blue-900/60 px-3 py-2 rounded border border-blue-700/50">
+        <p class="font-medium">Academic Year: <span class="text-white">2026–2027</span></p>
+        <p class="text-blue-200">Term: 1st Semester</p>
+      </div>
+    </header>
+
+    <!-- Form Description / Instructions -->
+    <div class="bg-slate-50 border-b border-slate-200 p-4 px-6 text-sm text-slate-600">
+      <p class="font-semibold text-slate-800 mb-1">Registration Instructions:</p>
+      <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+        <li>Please fill out all required fields marked with a red asterisk (<span class="text-red-600 font-bold">*</span>) accurately.</li>
+        <li>Student ID / LRN format must be either <strong>12 digits</strong> (LRN) or <strong>XX-XXXX-XXXX</strong> (School ID).</li>
+        <li>Applicants must be at least <strong>16 years old</strong> upon admission.</li>
+        <li>Supported document formats: PNG, JPG, or PDF (maximum file size: <strong>2MB</strong>).</li>
+      </ul>
+    </div>
+
+    <!-- Registration Form -->
+    <form id="registrationForm" class="p-6 space-y-8" novalidate>
+      
+      <!-- SECTION 1: Personal Information -->
+      <fieldset>
+        <legend>1. Personal Information</legend>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+          
+          <!-- Full Name -->
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1">
+              Full Name (First, Middle, Last) <span class="text-red-600">*</span>
+            </label>
+            <input type="text" id="fullName" name="fullName" placeholder="e.g. Juan A. Dela Cruz" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p id="fullNameError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Student ID / LRN -->
+          <div>
+            <label for="studentId" class="block text-sm font-medium text-slate-700 mb-1">
+              Student ID or LRN <span class="text-red-600">*</span>
+            </label>
+            <input type="text" id="studentId" name="studentId" placeholder="12-digit LRN or 26-1024-8890" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p class="text-xs text-slate-500 mt-0.5">Format: 12-digit LRN or XX-XXXX-XXXX</p>
+            <p id="studentIdError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Date of Birth & Age -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2">
+              <label for="dob" class="block text-sm font-medium text-slate-700 mb-1">
+                Date of Birth <span class="text-red-600">*</span>
+              </label>
+              <input type="date" id="dob" name="dob" min="1920-01-01" required
+                     class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+              <p id="dobError" class="text-xs text-red-600 mt-1 hidden"></p>
+            </div>
+            <div>
+              <label for="calculatedAge" class="block text-sm font-medium text-slate-700 mb-1">
+                Age
+              </label>
+              <input type="text" id="calculatedAge" readonly placeholder="--"
+                     class="w-full px-3 py-2 text-sm border border-slate-200 bg-slate-100 text-slate-700 font-semibold rounded text-center cursor-not-allowed" />
+            </div>
+          </div>
+
+          <!-- Mobile Phone -->
+          <div>
+            <label for="phone" class="block text-sm font-medium text-slate-700 mb-1">
+              Mobile Phone Number <span class="text-red-600">*</span>
+            </label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{11}" placeholder="09123456789" maxlength="11" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p class="text-xs text-slate-500 mt-0.5">Must be 11 digits starting with 09</p>
+            <p id="phoneError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Institutional Email -->
+          <div>
+            <label for="instEmail" class="block text-sm font-medium text-slate-700 mb-1">
+              Institutional Email Address <span class="text-red-600">*</span>
+            </label>
+            <input type="email" id="instEmail" name="instEmail" placeholder="student@university.edu.ph" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p class="text-xs text-slate-500 mt-0.5">Must end with .edu or .edu.ph</p>
+            <p id="instEmailError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Personal Email -->
+          <div>
+            <label for="personalEmail" class="block text-sm font-medium text-slate-700 mb-1">
+              Personal Email Address <span class="text-red-600">*</span>
+            </label>
+            <input type="email" id="personalEmail" name="personalEmail" placeholder="personal.name@gmail.com" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p class="text-xs text-slate-500 mt-0.5">Must be distinct from institutional email</p>
+            <p id="personalEmailError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Emergency Contact Name -->
+          <div class="md:col-span-2">
+            <label for="emergencyContact" class="block text-sm font-medium text-slate-700 mb-1">
+              Emergency Contact Person (Full Name) <span class="text-red-600">*</span>
+            </label>
+            <input type="text" id="emergencyContact" name="emergencyContact" placeholder="Parent / Guardian Full Name" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p class="text-xs text-slate-500 mt-0.5">Cannot be identical to student's own name</p>
+            <p id="emergencyContactError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <!-- SECTION 2: Academic & Enrollment Details -->
+      <fieldset>
+        <legend>2. Academic & Enrollment Details</legend>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+          
+          <!-- Degree Program Select -->
+          <div class="md:col-span-2">
+            <label for="degreeProgram" class="block text-sm font-medium text-slate-700 mb-1">
+              Degree Program / Major <span class="text-red-600">*</span>
+            </label>
+            <select id="degreeProgram" name="degreeProgram" required
+                    class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus bg-white transition-colors">
+              <option value="" disabled selected>-- Select Degree Program --</option>
+              <option value="BS Computer Science">BS Computer Science (BSCS)</option>
+              <option value="BS Information Technology">BS Information Technology (BSIT)</option>
+              <option value="BS Civil Engineering">BS Civil Engineering (BSCE)</option>
+              <option value="BS Accountancy">BS Accountancy (BSA)</option>
+              <option value="BS Nursing">BS Nursing (BSN)</option>
+              <option value="BS Psychology">BS Psychology (BSPsych)</option>
+            </select>
+            <p id="degreeProgramError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Year Level (Radio) -->
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">
+              Year Level <span class="text-red-600">*</span>
+            </label>
+            <div class="space-y-2 text-sm">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="yearLevel" value="1st Year" class="text-univ-primary focus:ring-univ-primary" />
+                <span>1st Year</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="yearLevel" value="2nd Year" class="text-univ-primary focus:ring-univ-primary" />
+                <span>2nd Year</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="yearLevel" value="3rd Year" class="text-univ-primary focus:ring-univ-primary" />
+                <span>3rd Year</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="yearLevel" value="4th Year" class="text-univ-primary focus:ring-univ-primary" />
+                <span>4th Year</span>
+              </label>
+            </div>
+            <p id="yearLevelError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Enrollment Status (Radio) -->
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">
+              Enrollment Status <span class="text-red-600">*</span>
+            </label>
+            <div class="space-y-2 text-sm">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="enrollmentStatus" value="Regular" class="text-univ-primary focus:ring-univ-primary" />
+                <span>Regular (Full-time load)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="enrollmentStatus" value="Irregular" class="text-univ-primary focus:ring-univ-primary" />
+                <span>Irregular (Part-time / Custom load)</span>
+              </label>
+            </div>
+            <p id="enrollmentStatusError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Units to Enroll -->
+          <div>
+            <label for="units" class="block text-sm font-medium text-slate-700 mb-1">
+              Units to Enroll (3 - 24) <span class="text-red-600">*</span>
+            </label>
+            <input type="number" id="units" name="units" min="3" max="24" placeholder="e.g. 21" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p id="unitsError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- GPA / GWA -->
+          <div>
+            <label for="gpa" class="block text-sm font-medium text-slate-700 mb-1">
+              Previous Semester GPA / GWA <span class="text-red-600">*</span>
+            </label>
+            <input type="number" id="gpa" name="gpa" step="0.01" min="1.00" max="5.00" placeholder="e.g. 1.75" required
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p class="text-xs text-slate-500 mt-0.5">Scale: 1.00 (Highest) to 5.00 (Lowest)</p>
+            <p id="gpaError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Laboratory Courses Checkbox Group -->
+          <div class="md:col-span-2 border-t border-slate-200 pt-4 mt-2">
+            <label class="block text-sm font-medium text-slate-700 mb-1">
+              Enrolled Laboratory Courses <span class="text-red-600">*</span>
+            </label>
+            <p class="text-xs text-slate-500 mb-3">Select at least one laboratory course or select "None / No Lab Courses".</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm" id="labCoursesContainer">
+              <label class="flex items-center gap-2 p-2 rounded border border-slate-200 bg-slate-50 hover:bg-white cursor-pointer">
+                <input type="checkbox" name="labCourses" value="Physics Lab" class="lab-course-cb rounded text-univ-primary focus:ring-univ-primary" />
+                <span>Physics Lab</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded border border-slate-200 bg-slate-50 hover:bg-white cursor-pointer">
+                <input type="checkbox" name="labCourses" value="Chemistry Lab" class="lab-course-cb rounded text-univ-primary focus:ring-univ-primary" />
+                <span>Chemistry Lab</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded border border-slate-200 bg-slate-50 hover:bg-white cursor-pointer">
+                <input type="checkbox" name="labCourses" value="Computer Programming Lab" class="lab-course-cb rounded text-univ-primary focus:ring-univ-primary" />
+                <span>Computer Programming Lab</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded border border-slate-200 bg-slate-50 hover:bg-white cursor-pointer">
+                <input type="checkbox" name="labCourses" value="Networking Lab" class="lab-course-cb rounded text-univ-primary focus:ring-univ-primary" />
+                <span>Networking Lab</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded border border-slate-200 bg-slate-50 hover:bg-white cursor-pointer">
+                <input type="checkbox" name="labCourses" value="Biology Lab" class="lab-course-cb rounded text-univ-primary focus:ring-univ-primary" />
+                <span>Biology Lab</span>
+              </label>
+              
+              <!-- Mutual Exclusivity "None" Option -->
+              <label class="flex items-center gap-2 p-2 rounded border border-amber-200 bg-amber-50 hover:bg-amber-100 cursor-pointer text-amber-900 font-medium">
+                <input type="checkbox" id="labNone" name="labCourses" value="None" class="rounded text-amber-700 focus:ring-amber-700" />
+                <span>None / No Lab Courses</span>
+              </label>
+            </div>
+            <p id="labCoursesError" class="text-xs text-red-600 mt-2 hidden"></p>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <!-- SECTION 3: Documents & Portal Account -->
+      <fieldset>
+        <legend>3. Documents & Portal Credentials</legend>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+          
+          <!-- File Upload -->
+          <div class="md:col-span-2">
+            <label for="documentFile" class="block text-sm font-medium text-slate-700 mb-1">
+              Proof of Grades or 2x2 ID Photo <span class="text-red-600">*</span>
+            </label>
+            <input type="file" id="documentFile" name="documentFile" accept="image/png, image/jpeg, application/pdf" required
+                   class="w-full text-sm text-slate-600 border border-slate-300 rounded cursor-pointer bg-white file:mr-4 file:py-2 file:px-4 file:rounded-l file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200" />
+            
+            <div class="flex items-center justify-between text-xs text-slate-500 mt-1">
+              <span>Allowed: PNG, JPG, PDF (Max size: 2MB)</span>
+              <span id="fileBadge" class="hidden font-mono font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200"></span>
+            </div>
+            <p id="documentFileError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Extracurricular Background Textarea -->
+          <div class="md:col-span-2">
+            <div class="flex items-center justify-between mb-1">
+              <label for="extracurricular" class="block text-sm font-medium text-slate-700">
+                Extracurricular Background & Scholarship Justification <span class="text-red-600">*</span>
+              </label>
+              <span id="charCounter" class="text-xs text-slate-500 font-mono">0 / min 30 chars</span>
+            </div>
+            <textarea id="extracurricular" name="extracurricular" rows="3" required
+                      placeholder="Describe your student leadership experience, academic honors, or reason for scholarship application (Minimum 30 characters)..."
+                      class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors"></textarea>
+            <p id="extracurricularError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Student Portal Password -->
+          <div>
+            <label for="portalPassword" class="block text-sm font-medium text-slate-700 mb-1">
+              Student Portal Password <span class="text-red-600">*</span>
+            </label>
+            <div class="relative">
+              <input type="password" id="portalPassword" name="portalPassword" required
+                     placeholder="••••••••"
+                     class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus pr-10 transition-colors" />
+              <button type="button" id="togglePassword" class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-800 px-1 py-1 font-semibold">
+                SHOW
+              </button>
+            </div>
+            
+            <!-- Password Validation Checklist -->
+            <div class="mt-2 text-xs text-slate-500 space-y-1 bg-slate-50 p-2.5 rounded border border-slate-200" id="passwordChecklist">
+              <p class="font-semibold text-slate-600">Password requirements:</p>
+              <div class="grid grid-cols-2 gap-x-2 gap-y-0.5">
+                <span id="pwdMinLen" class="text-slate-400">&bull; Min 8 characters</span>
+                <span id="pwdUpper" class="text-slate-400">&bull; 1 Uppercase letter</span>
+                <span id="pwdLower" class="text-slate-400">&bull; 1 Lowercase letter</span>
+                <span id="pwdNumber" class="text-slate-400">&bull; 1 Numeric digit</span>
+                <span id="pwdSpecial" class="text-slate-400 col-span-2">&bull; 1 Special symbol (!@#$%^&*)</span>
+              </div>
+            </div>
+            <p id="portalPasswordError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-slate-700 mb-1">
+              Confirm Portal Password <span class="text-red-600">*</span>
+            </label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required
+                   placeholder="••••••••"
+                   class="w-full px-3 py-2 text-sm border border-slate-300 rounded form-input-focus transition-colors" />
+            <p id="confirmPasswordError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+          <!-- Agreement Checkbox -->
+          <div class="md:col-span-2 bg-blue-50/60 p-4 border border-blue-200 rounded">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="termsAgreement" name="termsAgreement" class="mt-1 rounded text-univ-primary focus:ring-univ-primary" />
+              <span class="text-xs text-slate-700 leading-relaxed">
+                I hereby certify that all information provided in this registration form is true, correct, and complete. I agree to abide by the <strong>State University Honor Code</strong> and institutional policies governing enrollment.
+              </span>
+            </label>
+            <p id="termsAgreementError" class="text-xs text-red-600 mt-1 hidden"></p>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <!-- Form Actions -->
+      <div class="flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-slate-200 pt-6">
+        <button type="button" id="resetBtn" class="w-full sm:w-auto px-5 py-2.5 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded text-sm font-medium transition-colors">
+          Clear Form
+        </button>
+        <button type="submit" id="submitBtn" class="w-full sm:w-auto px-8 py-2.5 bg-univ-primary hover:bg-univ-hover text-white font-semibold rounded text-sm shadow-sm transition-colors flex items-center justify-center gap-2">
+          <span>Submit Registration</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </button>
+      </div>
+
+    </form>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-100 border-t border-slate-200 p-4 text-center text-xs text-slate-500">
+      State University Registrar System &bull; Secured Official Form &bull; &copy; 2026 All Rights Reserved.
+    </footer>
+  </div>
+
+
+  <!-- SUBMISSION SUMMARY MODAL BOX -->
+  <div id="summaryModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-none flex items-center justify-center p-4 z-50 hidden">
+    <div id="print-modal-content" class="bg-white rounded-lg border border-slate-300 shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="bg-univ-primary text-white p-4 px-6 flex items-center justify-between border-b border-blue-900">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-white text-univ-primary font-bold flex items-center justify-center text-sm">✓</div>
+          <div>
+            <h2 class="text-lg font-bold">Registration Summary Received</h2>
+            <p class="text-xs text-blue-200">Official Student Copy &bull; Verification Details</p>
+          </div>
+        </div>
+        <button type="button" id="closeModalCross" class="no-print text-blue-200 hover:text-white text-xl font-bold px-2">&times;</button>
+      </div>
+
+      <!-- Modal Body (Printable Details) -->
+      <div class="p-6 overflow-y-auto space-y-6 text-sm text-slate-800">
+        
+        <div class="bg-slate-50 p-3 rounded border border-slate-200 text-xs flex justify-between items-center">
+          <div>
+            <span class="text-slate-500">Ref Code:</span> 
+            <strong id="summaryRefCode" class="font-mono text-slate-800 ml-1">REG-2026-88941</strong>
+          </div>
+          <div>
+            <span class="text-slate-500">Date Submitted:</span> 
+            <strong id="summaryTimestamp" class="text-slate-800 ml-1">---</strong>
+          </div>
+        </div>
+
+        <!-- Section 1 Summary -->
+        <div>
+          <h3 class="font-bold text-univ-primary uppercase text-xs tracking-wider border-b border-slate-200 pb-1 mb-3">1. Personal Information</h3>
+          <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-xs">
+            <div><span class="text-slate-500">Full Name:</span> <p id="sumFullName" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Student ID / LRN:</span> <p id="sumStudentId" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Date of Birth:</span> <p id="sumDob" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Calculated Age:</span> <p id="sumAge" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Institutional Email:</span> <p id="sumInstEmail" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Personal Email:</span> <p id="sumPersonalEmail" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Mobile Phone:</span> <p id="sumPhone" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Emergency Contact:</span> <p id="sumEmergency" class="font-semibold text-slate-900"></p></div>
+          </div>
+        </div>
+
+        <!-- Section 2 Summary -->
+        <div>
+          <h3 class="font-bold text-univ-primary uppercase text-xs tracking-wider border-b border-slate-200 pb-1 mb-3">2. Academic & Enrollment Details</h3>
+          <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-xs">
+            <div class="col-span-2"><span class="text-slate-500">Degree Program:</span> <p id="sumDegree" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Year Level:</span> <p id="sumYear" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Enrollment Status:</span> <p id="sumStatus" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Units to Enroll:</span> <p id="sumUnits" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Previous Semester GPA:</span> <p id="sumGpa" class="font-semibold text-slate-900"></p></div>
+            <div class="col-span-2"><span class="text-slate-500">Enrolled Lab Courses:</span> <p id="sumLabs" class="font-semibold text-slate-900"></p></div>
+          </div>
+        </div>
+
+        <!-- Section 3 Summary -->
+        <div>
+          <h3 class="font-bold text-univ-primary uppercase text-xs tracking-wider border-b border-slate-200 pb-1 mb-3">3. Submitted Documents & Credentials</h3>
+          <div class="space-y-2 text-xs">
+            <div><span class="text-slate-500">Uploaded Document:</span> <p id="sumFile" class="font-semibold text-slate-900"></p></div>
+            <div><span class="text-slate-500">Portal Password:</span> <p id="sumPassword" class="font-mono text-slate-900">•••••••••••• (Encrypted)</p></div>
+            <div><span class="text-slate-500">Extracurricular / Justification:</span> <p id="sumJustification" class="italic text-slate-700 bg-slate-50 p-2.5 rounded border border-slate-200 mt-1 whitespace-pre-line"></p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer (Actions) -->
+      <div class="no-print bg-slate-50 border-t border-slate-200 p-4 px-6 flex items-center justify-end gap-3">
+        <button type="button" id="closeModalBtn" class="px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded text-xs font-semibold transition-colors">
+          Edit / Go Back
+        </button>
+        <button type="button" id="printModalBtn" class="px-5 py-2 bg-univ-primary hover:bg-univ-hover text-white rounded text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 000-4H9a2 2 0 000 4zm8-12V5a2 2 0 00-2-2H7a2 2 0 00-2 2v4h10z"/>
+          </svg>
+          Print Receipt Summary
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- JAVASCRIPT VALIDATION & LOGIC -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const form = document.getElementById('registrationForm');
+      const dobInput = document.getElementById('dob');
+      const calculatedAgeInput = document.getElementById('calculatedAge');
+      const instEmailInput = document.getElementById('instEmail');
+      const personalEmailInput = document.getElementById('personalEmail');
+      const fullNameInput = document.getElementById('fullName');
+      const emergencyContactInput = document.getElementById('emergencyContact');
+      const studentIdInput = document.getElementById('studentId');
+      const phoneInput = document.getElementById('phone');
+      const degreeProgramInput = document.getElementById('degreeProgram');
+      const unitsInput = document.getElementById('units');
+      const gpaInput = document.getElementById('gpa');
+      const fileInput = document.getElementById('documentFile');
+      const fileBadge = document.getElementById('fileBadge');
+      const extracurricularInput = document.getElementById('extracurricular');
+      const charCounter = document.getElementById('charCounter');
+      const passwordInput = document.getElementById('portalPassword');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const togglePasswordBtn = document.getElementById('togglePassword');
+      const termsAgreementInput = document.getElementById('termsAgreement');
+      const labCheckboxes = document.querySelectorAll('.lab-course-cb');
+      const labNoneCheckbox = document.getElementById('labNone');
+      const resetBtn = document.getElementById('resetBtn');
+
+      // Summary Modal Elements
+      const summaryModal = document.getElementById('summaryModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const closeModalCross = document.getElementById('closeModalCross');
+      const printModalBtn = document.getElementById('printModalBtn');
+
+      // Set Date of Birth Max to Today
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      dobInput.max = `${yyyy}-${mm}-${dd}`;
+
+      // Helper function to show field error
+      function setError(element, errorId, message) {
+        const errorElement = document.getElementById(errorId);
+        if (element) {
+          element.classList.add('error-input');
+          element.classList.remove('valid-input');
+        }
+        if (errorElement) {
+          errorElement.textContent = message;
+          errorElement.classList.remove('hidden');
+        }
+      }
+
+      // Helper function to clear field error
+      function clearError(element, errorId) {
+        const errorElement = document.getElementById(errorId);
+        if (element) {
+          element.classList.remove('error-input');
+          element.classList.add('valid-input');
+        }
+        if (errorElement) {
+          errorElement.textContent = '';
+          errorElement.classList.add('hidden');
+        }
+      }
+
+      // Helper function for age calculation
+      function getCalculatedAge(dobString) {
+        if (!dobString) return null;
+        const birthDate = new Date(dobString);
+        const todayDate = new Date();
+        let age = todayDate.getFullYear() - birthDate.getFullYear();
+        const monthDiff = todayDate.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && todayDate.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+      // Handle Age Calculation Live
+      dobInput.addEventListener('change', () => {
+        validateDob();
+      });
+
+      function validateDob() {
+        const dobVal = dobInput.value;
+        if (!dobVal) {
+          calculatedAgeInput.value = '--';
+          setError(dobInput, 'dobError', 'Date of birth is required.');
+          return false;
+        }
+        const age = getCalculatedAge(dobVal);
+        if (age === null || isNaN(age)) {
+          calculatedAgeInput.value = '--';
+          setError(dobInput, 'dobError', 'Please enter a valid birth date.');
+          return false;
+        }
+        
+        calculatedAgeInput.value = age + ' yrs';
+
+        if (age < 16) {
+          setError(dobInput, 'dobError', `Age is ${age}. Student must be at least 16 years old to register.`);
+          return false;
+        } else if (age > 100) {
+          setError(dobInput, 'dobError', 'Please provide a valid date of birth.');
+          return false;
+        } else {
+          clearError(dobInput, 'dobError');
+          return true;
+        }
+      }
+
+      // Mutual Exclusivity logic for Lab Courses
+      labNoneCheckbox.addEventListener('change', () => {
+        if (labNoneCheckbox.checked) {
+          labCheckboxes.forEach(cb => {
+            cb.checked = false;
+            cb.disabled = true;
+            cb.closest('label').classList.add('opacity-50', 'cursor-not-allowed');
+          });
+        } else {
+          labCheckboxes.forEach(cb => {
+            cb.disabled = false;
+            cb.closest('label').classList.remove('opacity-50', 'cursor-not-allowed');
+          });
+        }
+        validateLabCourses();
+      });
+
+      labCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) {
+            labNoneCheckbox.checked = false;
+          }
+          validateLabCourses();
+        });
+      });
+
+      function validateLabCourses() {
+        const anyLabChecked = Array.from(labCheckboxes).some(cb => cb.checked);
+        const noneChecked = labNoneCheckbox.checked;
+
+        if (!anyLabChecked && !noneChecked) {
+          setError(null, 'labCoursesError', 'Please select at least one laboratory course or check "None".');
+          return false;
+        } else {
+          clearError(null, 'labCoursesError');
+          return true;
+        }
+      }
+
+      // File Input Validation (Format & Size <= 2MB)
+      fileInput.addEventListener('change', () => {
+        validateFile();
+      });
+
+      function validateFile() {
+        const file = fileInput.files[0];
+        if (!file) {
+          fileBadge.classList.add('hidden');
+          setError(fileInput, 'documentFileError', 'Proof of grades or photo is required.');
+          return false;
+        }
+
+        const allowedExtensions = ['png', 'jpg', 'jpeg', 'pdf'];
+        const fileName = file.name;
+        const fileExt = fileName.split('.').pop().toLowerCase();
+        const maxSizeBytes = 2 * 1024 * 1024; // 2MB
+
+        const formattedSize = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+        fileBadge.textContent = `${fileName} (${formattedSize})`;
+        fileBadge.classList.remove('hidden');
+
+        if (!allowedExtensions.includes(fileExt)) {
+          setError(fileInput, 'documentFileError', 'Invalid file type. Only PNG, JPG, or PDF files are accepted.');
+          return false;
+        }
+
+        if (file.size > maxSizeBytes) {
+          setError(fileInput, 'documentFileError', `File size (${formattedSize}) exceeds the 2MB limit.`);
+          return false;
+        }
+
+        clearError(fileInput, 'documentFileError');
+        return true;
+      }
+
+      // Character Counter for Textarea
+      extracurricularInput.addEventListener('input', () => {
+        validateExtracurricular();
+      });
+
+      function validateExtracurricular() {
+        const text = extracurricularInput.value.trim();
+        const len = text.length;
+        charCounter.textContent = `${len} / min 30 chars`;
+
+        if (len < 30) {
+          charCounter.classList.add('text-red-600');
+          charCounter.classList.remove('text-slate-500');
+          setError(extracurricularInput, 'extracurricularError', `Please provide at least 30 characters (${30 - len} more required).`);
+          return false;
+        } else {
+          charCounter.classList.remove('text-red-600');
+          charCounter.classList.add('text-slate-500');
+          clearError(extracurricularInput, 'extracurricularError');
+          return true;
+        }
+      }
+
+      // Password Strength Verification & Toggle
+      togglePasswordBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePasswordBtn.textContent = isPassword ? 'HIDE' : 'SHOW';
+      });
+
+      passwordInput.addEventListener('input', () => {
+        validatePassword();
+        if (confirmPasswordInput.value) {
+          validateConfirmPassword();
+        }
+      });
+
+      confirmPasswordInput.addEventListener('input', () => {
+        validateConfirmPassword();
+      });
+
+      function validatePassword() {
+        const val = passwordInput.value;
+        
+        const hasMinLen = val.length >= 8;
+        const hasUpper = /[A-Z]/.test(val);
+        const hasLower = /[a-z]/.test(val);
+        const hasNum = /[0-9]/.test(val);
+        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
+
+        // Update checklist UI indicators
+        updateRequirementIndicator('pwdMinLen', hasMinLen);
+        updateRequirementIndicator('pwdUpper', hasUpper);
+        updateRequirementIndicator('pwdLower', hasLower);
+        updateRequirementIndicator('pwdNumber', hasNum);
+        updateRequirementIndicator('pwdSpecial', hasSpecial);
+
+        const isStrong = hasMinLen && hasUpper && hasLower && hasNum && hasSpecial;
+
+        if (!val) {
+          setError(passwordInput, 'portalPasswordError', 'Password is required.');
+          return false;
+        } else if (!isStrong) {
+          setError(passwordInput, 'portalPasswordError', 'Password does not meet all security requirements listed above.');
+          return false;
+        } else {
+          clearError(passwordInput, 'portalPasswordError');
+          return true;
+        }
+      }
+
+      function updateRequirementIndicator(id, isValid) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (isValid) {
+          el.className = 'text-green-600 font-semibold';
+        } else {
+          el.className = 'text-slate-400';
+        }
+      }
+
+      function validateConfirmPassword() {
+        const pwd = passwordInput.value;
+        const confirmPwd = confirmPasswordInput.value;
+
+        if (!confirmPwd) {
+          setError(confirmPasswordInput, 'confirmPasswordError', 'Please confirm your password.');
+          return false;
+        } else if (pwd !== confirmPwd) {
+          setError(confirmPasswordInput, 'confirmPasswordError', 'Passwords do not match.');
+          return false;
+        } else {
+          clearError(confirmPasswordInput, 'confirmPasswordError');
+          return true;
+        }
+      }
+
+      // Full Name Validation
+      fullNameInput.addEventListener('input', () => {
+        validateFullName();
+        if (emergencyContactInput.value) validateEmergencyContact();
+      });
+
+      function validateFullName() {
+        const val = fullNameInput.value.trim();
+        if (!val) {
+          setError(fullNameInput, 'fullNameError', 'Full Name is required.');
+          return false;
+        } else if (val.length < 3) {
+          setError(fullNameInput, 'fullNameError', 'Full Name must be at least 3 characters.');
+          return false;
+        } else {
+          clearError(fullNameInput, 'fullNameError');
+          return true;
+        }
+      }
+
+      // Emergency Contact Validation (Must not equal Full Name)
+      emergencyContactInput.addEventListener('input', () => {
+        validateEmergencyContact();
+      });
+
+      function validateEmergencyContact() {
+        const val = emergencyContactInput.value.trim();
+        const studentName = fullNameInput.value.trim();
+
+        if (!val) {
+          setError(emergencyContactInput, 'emergencyContactError', 'Emergency contact name is required.');
+          return false;
+        } else if (studentName && val.toLowerCase() === studentName.toLowerCase()) {
+          setError(emergencyContactInput, 'emergencyContactError', 'Emergency contact cannot be identical to the student\'s own name.');
+          return false;
+        } else {
+          clearError(emergencyContactInput, 'emergencyContactError');
+          return true;
+        }
+      }
+
+      // Student ID / LRN Validation
+      studentIdInput.addEventListener('input', () => {
+        validateStudentId();
+      });
+
+      function validateStudentId() {
+        const val = studentIdInput.value.trim();
+        // Accepts 12-digit LRN (e.g., 123456789012) OR standard format (e.g., 26-1024-8890)
+        const lrnPattern = /^\d{12}$/;
+        const schoolIdPattern = /^\d{2}-\d{4}-\d{4}$/;
+
+        if (!val) {
+          setError(studentIdInput, 'studentIdError', 'Student ID or LRN is required.');
+          return false;
+        } else if (!lrnPattern.test(val) && !schoolIdPattern.test(val)) {
+          setError(studentIdInput, 'studentIdError', 'Enter a valid 12-digit LRN or ID in format XX-XXXX-XXXX.');
+          return false;
+        } else {
+          clearError(studentIdInput, 'studentIdError');
+          return true;
+        }
+      }
+
+      // Mobile Phone Validation
+      phoneInput.addEventListener('input', () => {
+        validatePhone();
+      });
+
+      function validatePhone() {
+        const val = phoneInput.value.trim();
+        const phonePattern = /^09\d{9}$/;
+
+        if (!val) {
+          setError(phoneInput, 'phoneError', 'Mobile phone number is required.');
+          return false;
+        } else if (!phonePattern.test(val)) {
+          setError(phoneInput, 'phoneError', 'Must be an 11-digit number starting with 09 (e.g. 09123456789).');
+          return false;
+        } else {
+          clearError(phoneInput, 'phoneError');
+          return true;
+        }
+      }
+
+      // Institutional Email Validation (.edu or .edu.ph check)
+      instEmailInput.addEventListener('input', () => {
+        validateInstEmail();
+        if (personalEmailInput.value) validatePersonalEmail();
+      });
+
+      function validateInstEmail() {
+        const val = instEmailInput.value.trim().toLowerCase();
+        const basicEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const eduPattern = /(\.edu|\.edu\.ph)$/i;
+
+        if (!val) {
+          setError(instEmailInput, 'instEmailError', 'Institutional email address is required.');
+          return false;
+        } else if (!basicEmailPattern.test(val)) {
+          setError(instEmailInput, 'instEmailError', 'Please enter a valid email format.');
+          return false;
+        } else if (!eduPattern.test(val)) {
+          setError(instEmailInput, 'instEmailError', 'Institutional email must end with .edu or .edu.ph');
+          return false;
+        } else {
+          clearError(instEmailInput, 'instEmailError');
+          return true;
+        }
+      }
+
+      // Personal Email Validation (Must not equal Institutional Email)
+      personalEmailInput.addEventListener('input', () => {
+        validatePersonalEmail();
+      });
+
+      function validatePersonalEmail() {
+        const val = personalEmailInput.value.trim().toLowerCase();
+        const instVal = instEmailInput.value.trim().toLowerCase();
+        const basicEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!val) {
+          setError(personalEmailInput, 'personalEmailError', 'Personal email address is required.');
+          return false;
+        } else if (!basicEmailPattern.test(val)) {
+          setError(personalEmailInput, 'personalEmailError', 'Please enter a valid email address.');
+          return false;
+        } else if (instVal && val === instVal) {
+          setError(personalEmailInput, 'personalEmailError', 'Personal email must be different from institutional email.');
+          return false;
+        } else {
+          clearError(personalEmailInput, 'personalEmailError');
+          return true;
+        }
+      }
+
+      // Degree Program Dropdown Validation
+      degreeProgramInput.addEventListener('change', () => {
+        validateDegreeProgram();
+      });
+
+      function validateDegreeProgram() {
+        if (!degreeProgramInput.value) {
+          setError(degreeProgramInput, 'degreeProgramError', 'Please select your degree program.');
+          return false;
+        } else {
+          clearError(degreeProgramInput, 'degreeProgramError');
+          return true;
+        }
+      }
+
+      // Year Level & Enrollment Status Radio Validation
+      function validateRadioGroup(name, errorId, errorMsg) {
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        if (!selected) {
+          setError(null, errorId, errorMsg);
+          return false;
+        } else {
+          clearError(null, errorId);
+          return true;
+        }
+      }
+
+      document.querySelectorAll('input[name="yearLevel"]').forEach(r => {
+        r.addEventListener('change', () => validateRadioGroup('yearLevel', 'yearLevelError', 'Please select a year level.'));
+      });
+
+      document.querySelectorAll('input[name="enrollmentStatus"]').forEach(r => {
+        r.addEventListener('change', () => validateRadioGroup('enrollmentStatus', 'enrollmentStatusError', 'Please select an enrollment status.'));
+      });
+
+      // Units to Enroll Validation
+      unitsInput.addEventListener('input', () => {
+        validateUnits();
+      });
+
+      function validateUnits() {
+        const val = parseInt(unitsInput.value, 10);
+        if (isNaN(val)) {
+          setError(unitsInput, 'unitsError', 'Units to enroll is required.');
+          return false;
+        } else if (val < 3 || val > 24) {
+          setError(unitsInput, 'unitsError', 'Units must be between 3 and 24.');
+          return false;
+        } else {
+          clearError(unitsInput, 'unitsError');
+          return true;
+        }
+      }
+
+      // GPA Validation
+      gpaInput.addEventListener('input', () => {
+        validateGpa();
+      });
+
+      function validateGpa() {
+        const val = parseFloat(gpaInput.value);
+        if (isNaN(val)) {
+          setError(gpaInput, 'gpaError', 'GPA / GWA is required.');
+          return false;
+        } else if (val < 1.00 || val > 5.00) {
+          setError(gpaInput, 'gpaError', 'GPA / GWA must be between 1.00 and 5.00.');
+          return false;
+        } else {
+          clearError(gpaInput, 'gpaError');
+          return true;
+        }
+      }
+
+      // Terms Agreement Checkbox Validation
+      termsAgreementInput.addEventListener('change', () => {
+        validateTerms();
+      });
+
+      function validateTerms() {
+        if (!termsAgreementInput.checked) {
+          setError(termsAgreementInput, 'termsAgreementError', 'You must agree to the university honor code and terms to proceed.');
+          return false;
+        } else {
+          clearError(termsAgreementInput, 'termsAgreementError');
+          return true;
+        }
+      }
+
+      // Reset Button Clears Errors & Form State
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        calculatedAgeInput.value = '--';
+        fileBadge.classList.add('hidden');
+        charCounter.textContent = '0 / min 30 chars';
+        
+        // Re-enable lab checkboxes if they were disabled by "None"
+        labCheckboxes.forEach(cb => {
+          cb.disabled = false;
+          cb.closest('label').classList.remove('opacity-50', 'cursor-not-allowed');
+        });
+
+        // Hide all error messages & styling
+        document.querySelectorAll('[id$="Error"]').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.error-input, .valid-input').forEach(el => {
+          el.classList.remove('error-input', 'valid-input');
+        });
+
+        // Reset password checklist colors
+        ['pwdMinLen', 'pwdUpper', 'pwdLower', 'pwdNumber', 'pwdSpecial'].forEach(id => {
+          document.getElementById(id).className = 'text-slate-400';
+        });
+      });
+
+
+      // Comprehensive Form Validation on Submit
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const isFullNameValid = validateFullName();
+        const isStudentIdValid = validateStudentId();
+        const isDobValid = validateDob();
+        const isPhoneValid = validatePhone();
+        const isInstEmailValid = validateInstEmail();
+        const isPersonalEmailValid = validatePersonalEmail();
+        const isEmergencyValid = validateEmergencyContact();
+        const isDegreeValid = validateDegreeProgram();
+        const isYearValid = validateRadioGroup('yearLevel', 'yearLevelError', 'Please select a year level.');
+        const isStatusValid = validateRadioGroup('enrollmentStatus', 'enrollmentStatusError', 'Please select an enrollment status.');
+        const isUnitsValid = validateUnits();
+        const isGpaValid = validateGpa();
+        const isLabsValid = validateLabCourses();
+        const isFileValid = validateFile();
+        const isExtracurricularValid = validateExtracurricular();
+        const isPasswordValid = validatePassword();
+        const isConfirmPasswordValid = validateConfirmPassword();
+        const isTermsValid = validateTerms();
+
+        const isFormValid = isFullNameValid && isStudentIdValid && isDobValid && isPhoneValid &&
+                            isInstEmailValid && isPersonalEmailValid && isEmergencyValid &&
+                            isDegreeValid && isYearValid && isStatusValid && isUnitsValid &&
+                            isGpaValid && isLabsValid && isFileValid && isExtracurricularValid &&
+                            isPasswordValid && isConfirmPasswordValid && isTermsValid;
+
+        if (!isFormValid) {
+          // Focus first invalid element
+          const firstError = form.querySelector('.error-input');
+          if (firstError) {
+            firstError.focus();
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+
+        // POPULATE SUMMARY MODAL
+        document.getElementById('summaryRefCode').textContent = 'REG-2026-' + Math.floor(10000 + Math.random() * 90000);
+        document.getElementById('summaryTimestamp').textContent = new Date().toLocaleString();
+
+        document.getElementById('sumFullName').textContent = fullNameInput.value.trim();
+        document.getElementById('sumStudentId').textContent = studentIdInput.value.trim();
+        document.getElementById('sumDob').textContent = dobInput.value;
+        document.getElementById('sumAge').textContent = calculatedAgeInput.value;
+        document.getElementById('sumInstEmail').textContent = instEmailInput.value.trim();
+        document.getElementById('sumPersonalEmail').textContent = personalEmailInput.value.trim();
+        document.getElementById('sumPhone').textContent = phoneInput.value.trim();
+        document.getElementById('sumEmergency').textContent = emergencyContactInput.value.trim();
+
+        document.getElementById('sumDegree').textContent = degreeProgramInput.value;
+        
+        const yearSelected = document.querySelector('input[name="yearLevel"]:checked');
+        document.getElementById('sumYear').textContent = yearSelected ? yearSelected.value : '--';
+        
+        const statusSelected = document.querySelector('input[name="enrollmentStatus"]:checked');
+        document.getElementById('sumStatus').textContent = statusSelected ? statusSelected.value : '--';
+        
+        document.getElementById('sumUnits').textContent = unitsInput.value + ' Units';
+        document.getElementById('sumGpa').textContent = parseFloat(gpaInput.value).toFixed(2);
+
+        // Selected Labs
+        if (labNoneCheckbox.checked) {
+          document.getElementById('sumLabs').textContent = 'None (No Laboratory Courses)';
+        } else {
+          const selectedLabs = Array.from(labCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+          document.getElementById('sumLabs').textContent = selectedLabs.join(', ');
+        }
+
+        // File Details
+        const uploadedFile = fileInput.files[0];
+        if (uploadedFile) {
+          const sizeMb = (uploadedFile.size / (1024 * 1024)).toFixed(2);
+          document.getElementById('sumFile').textContent = `${uploadedFile.name} (${sizeMb} MB)`;
+        }
+
+        document.getElementById('sumJustification').textContent = extracurricularInput.value.trim();
+
+        // Show Modal
+        summaryModal.classList.remove('hidden');
+      });
+
+      // Close Modal Logic
+      function hideModal() {
+        summaryModal.classList.add('hidden');
+      }
+
+      closeModalBtn.addEventListener('click', hideModal);
+      closeModalCross.addEventListener('click', hideModal);
+
+      // Print Receipt Summary
+      printModalBtn.addEventListener('click', () => {
+        window.print();
+      });
+
+    });
+  </script>
+</body>
+</html>
